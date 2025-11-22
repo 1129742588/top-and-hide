@@ -1,5 +1,6 @@
 #include"top.h"
 #include"hide.h"
+#include"tray_set.h"
 #include"lable_hook.h"
 #include<thread>
 using namespace std;
@@ -70,15 +71,15 @@ LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
     return CallNextHookEx(keyboardHook, nCode, wParam, lParam);
 }
 
-int main()
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
     //注册窗口类
     lp.register_win_class();
     thread(run_lable).detach();
     keyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, KeyboardProc, GetModuleHandle(NULL), 0);
     cout << "创建窗口" << endl;
-
-
+    //托盘处理
+    creat_tray();
 
 
 

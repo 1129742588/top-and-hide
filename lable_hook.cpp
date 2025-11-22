@@ -38,8 +38,8 @@ HWND lable::creat_lable(HWND parent)
             L"TopLable",  // 不同的类名
             L"",  // 空标题
             WS_POPUP | WS_VISIBLE,  // 弹出窗口样式
-            0, 0,
-            80, 25,  // 更小的尺寸
+            -10, 0,
+            80, 30,  // 更小的尺寸
             NULL, NULL, GetModuleHandle(NULL), NULL
         );
         //这里的绑定必须在颜色透明之前，不然显示不出窗口
@@ -110,8 +110,29 @@ LRESULT CALLBACK LabelWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPa
         HBRUSH hBrush = CreateSolidBrush(RGB(0, 0, 0));
         FillRect(hdcMem, &rect, hBrush);
         DeleteObject(hBrush);
+        
+        //// 设置字体
+        //HFONT hFont = CreateFont(
+        //    35,                       // 字体高度
+        //    0,                        // 宽度（0表示根据高度自动调整）
+        //    0,                        // 文本倾斜度
+        //    0,                        // 方向
+        //    FW_NORMAL,                // 字体粗细
+        //    FALSE,                    // 是否斜体
+        //    FALSE,                    // 是否下划线
+        //    FALSE,                    // 是否删除线
+        //    DEFAULT_CHARSET,          // 字符集
+        //    OUT_DEFAULT_PRECIS,       // 输出精度
+        //    CLIP_DEFAULT_PRECIS,      // 裁剪精度
+        //    DEFAULT_QUALITY,          // 输出质量
+        //    DEFAULT_PITCH | FF_SWISS, // 字体系列和间距
+        //    L"微软雅黑"               // 字体名称
+        //);
 
-        // 绘制文字
+        //// 选择新字体到DC，保存旧字体
+        //HFONT hOldFont = (HFONT)SelectObject(hdcMem, hFont);
+
+        // 设置文本属性
         SetBkMode(hdcMem, TRANSPARENT);
         SetTextColor(hdcMem, RGB(255, 0, 0));
         DrawText(hdcMem, L"置顶", -1, &rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
@@ -119,6 +140,10 @@ LRESULT CALLBACK LabelWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPa
         // 复制到屏幕
         BitBlt(hdc, 0, 0, rect.right, rect.bottom, hdcMem, 0, 0, SRCCOPY);
 
+
+        //// 恢复旧字体并删除新字体
+        //SelectObject(hdcMem, hOldFont);
+        //DeleteObject(hFont);
         // 清理
         DeleteObject(hBitmap);
         DeleteDC(hdcMem);
@@ -145,6 +170,8 @@ LRESULT CALLBACK LabelWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPa
     return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }
 
+
+//聚焦窗口变化监测回调函数
 void CALLBACK HandleFocusEvent(
         HWINEVENTHOOK hWinEventHook,  // 事件钩子句柄
         DWORD event,                  // 事件类型
