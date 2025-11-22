@@ -1,0 +1,40 @@
+
+int main() 
+{
+    std::cout << "=== 使用 SetWinEventHook 监听焦点变化 ===" << std::endl;
+    std::cout << "开始监听..." << std::endl;
+
+    l.register_win_class();
+
+    // 设置Windows事件钩子
+    HWINEVENTHOOK hook = SetWinEventHook(
+        EVENT_SYSTEM_FOREGROUND,  // 监听的事件类型：前景窗口变化
+        EVENT_OBJECT_LOCATIONCHANGE,  // 监听的事件范围结束（同开始，表示只监听这一种事件）
+        NULL,                     // 监听所有进程
+        HandleFocusEvent,         // 事件发生时的回调函数
+        0, 0,                     // 监听所有进程和线程
+        WINEVENT_OUTOFCONTEXT     // 在发出事件的进程上下文之外调用
+    );
+
+    // 检查钩子是否设置成功
+    if (!hook) {
+        std::cout << "错误：无法设置事件钩子" << std::endl;
+        return 1;
+    }
+
+    std::cout << "钩子设置成功，开始监听焦点变化..." << std::endl;
+    std::cout << "按任意键退出程序" << std::endl;
+
+    // 消息循环 - 必须要有，否则程序会立即退出
+    MSG msg;
+    while (GetMessage(&msg, NULL, 0, 0)) {
+        TranslateMessage(&msg);
+        DispatchMessage(&msg);
+    }
+
+    // 程序退出前卸载钩子
+    UnhookWinEvent(hook);
+    std::cout << "程序已退出" << std::endl;
+
+    return 0;
+}
