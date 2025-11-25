@@ -1,11 +1,11 @@
-#include"top.h"
+ï»¿#include"top.h"
 using namespace std;
 
 
-//È«¾Ö±äÁ¿
+//å…¨å±€å˜é‡
 top_list t;
 extern lable lp;
-//ÈİÆ÷ÀàÊµÏÖ
+//å®¹å™¨ç±»å®ç°
 top_list::top_list()
 	{
 
@@ -37,7 +37,7 @@ bool top_list::Remove(HWND hwnd)
 		}
 		else
 		{
-			cout << "Î´ÕÒµ½¶ÔÓ¦´°¿Ú" << endl;
+			cout << "æœªæ‰¾åˆ°å¯¹åº”çª—å£" << endl;
 			return false;
 		}
 	}
@@ -46,53 +46,53 @@ bool top_list::Remove(HWND hwnd)
 
 
 
-//ÅĞ¶ÏÊÇ·ñ£¨¸Ã/ÄÜ£©ÖÃ¶¥
+//åˆ¤æ–­æ˜¯å¦ï¼ˆè¯¥/èƒ½ï¼‰ç½®é¡¶
 bool is_enable_top(HWND hwnd)
 {
-	// »ù±¾¼ì²é£º´°¿Ú±ØĞë´æÔÚÇÒ¿É¼û
+	// åŸºæœ¬æ£€æŸ¥ï¼šçª—å£å¿…é¡»å­˜åœ¨ä¸”å¯è§
 	if (!IsWindowVisible(hwnd))
 	{
-		cout << "´°¿Ú²»¿É¼û" << endl;
+		cout << "çª—å£ä¸å¯è§" << endl;
 		return false;
 	}
 
-	// »ñÈ¡´°¿ÚÑùÊ½
+	// è·å–çª—å£æ ·å¼
 	LONG style = GetWindowLongW(hwnd, GWL_STYLE);
 	LONG exStyle = GetWindowLongW(hwnd, GWL_EXSTYLE);
 
-	// ÅÅ³ı×Ó´°¿Ú
+	// æ’é™¤å­çª—å£
 	if (style & WS_CHILD)
 	{
-		cout << "ÊÇÎª×Ó´°¿Ú" << endl;
+		cout << "æ˜¯ä¸ºå­çª—å£" << endl;
 		return false;
 	}
 
-	// ÅÅ³ı¹¤¾ß´°¿Ú£¨³ı·ÇÃ÷È·ĞèÒª£©
+	// æ’é™¤å·¥å…·çª—å£ï¼ˆé™¤éæ˜ç¡®éœ€è¦ï¼‰
 	if (exStyle & WS_EX_TOOLWINDOW) 
 	{
-		cout << "ÊÇ¹¤¾ß´°¿Ú" << endl;
+		cout << "æ˜¯å·¥å…·çª—å£" << endl;
 		return false;
 	}
 	return true;
 }
 
-//ÅĞ¶ËÊÇ·ñÖÃ¶¥ÖØ¸´£¬²¢È¡ÏûÖÃ¶¥
+//åˆ¤ç«¯æ˜¯å¦ç½®é¡¶é‡å¤ï¼Œå¹¶å–æ¶ˆç½®é¡¶
 bool is_repeatedly_top(HWND hwnd)
 {
-	// ÊµÊ±¼ì²é´°¿Úµ±Ç°ÊÇ·ñÖÃ¶¥
+	// å®æ—¶æ£€æŸ¥çª—å£å½“å‰æ˜¯å¦ç½®é¡¶
 	LONG exStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
 	bool is_repeatedly = (exStyle & WS_EX_TOPMOST) != 0;
 	if (is_repeatedly)
 	{
-		cout << "ÒÑ¾­ÖÃ¶¥£¬ÏÖÈ¡ÏûÖÃ¶¥" << endl;
+		cout << "å·²ç»ç½®é¡¶ï¼Œç°å–æ¶ˆç½®é¡¶" << endl;
 		SetWindowPos(hwnd, HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
-		t.Remove(hwnd);//¸üĞÂÖÃ¶¥ÈİÆ÷
-		lp.delete_lable(hwnd);//É¾³ı¶ÔÓ¦±êÇ©
+		t.Remove(hwnd);//æ›´æ–°ç½®é¡¶å®¹å™¨
+		lp.delete_lable(hwnd);//åˆ é™¤å¯¹åº”æ ‡ç­¾
 		return true;
 	}
 	return false;
 }
-//ÖÃ¶¥ÊµÏÖ
+//ç½®é¡¶å®ç°
 int wintop()
 {
 	HWND current_win = GetForegroundWindow();
@@ -110,17 +110,17 @@ int wintop()
 	bool top_success = SetWindowPos(current_win, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
 	if (!top_success)
 	{
-		cout << "ÖÃ¶¥Ê§°Ü£¡" << endl;
+		cout << "ç½®é¡¶å¤±è´¥ï¼" << endl;
 		return -1;
 	}
-	//³É¹¦ºó¼ÓÈëÖÃ¶¥ÈİÆ÷
+	//æˆåŠŸååŠ å…¥ç½®é¡¶å®¹å™¨
 	t.AddWindow(current_win);
-	//´´½¨±êÇ©
+	//åˆ›å»ºæ ‡ç­¾
 	lp.creat_lable(current_win);
-	cout << "ÖÃ¶¥³É¹¦" << endl;
+	cout << "ç½®é¡¶æˆåŠŸ" << endl;
 	return 1;
 }
-//È¡ÏûÈ«²¿ÖÃ¶¥
+//å–æ¶ˆå…¨éƒ¨ç½®é¡¶
 bool clean_all_top()
 {
 	for (const auto& p : t.status)
@@ -130,6 +130,6 @@ bool clean_all_top()
 		lp.delete_lable(hwnd);
 	}
 	t.status.clear();
-	cout << "È¡ÏûËùÓĞÖÃ¶¥³É¹¦!" << endl;
+	cout << "å–æ¶ˆæ‰€æœ‰ç½®é¡¶æˆåŠŸ!" << endl;
 	return 1;
 }

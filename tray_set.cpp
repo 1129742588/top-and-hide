@@ -30,6 +30,11 @@ LRESULT CALLBACK TrayWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             clean_all_top();
             PostMessage(hwnd, WM_CLOSE, 0, 0);
         }
+        if (LOWORD(wParam) == 111)
+        {
+            h.restore();
+            clean_all_top();
+        }
         break;
 
     case WM_DESTROY:
@@ -92,6 +97,7 @@ void CreateTrayMenu()
 {
     g_trayMenu = CreatePopupMenu();
     AppendMenu(g_trayMenu, MF_STRING, IDM_EXIT, L"退出");
+    AppendMenu(g_trayMenu, MF_STRING, 111, L"清除");
 }
 
 // 显示托盘菜单

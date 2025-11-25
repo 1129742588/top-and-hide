@@ -1,40 +1,40 @@
-#include"hide.h"
+ï»¿#include"hide.h"
 using namespace std;
 
-//È«¾Ö±äÁ¿
+//å…¨å±€å˜é‡
 hide_win h;
 
-//ÅĞ¶ÏÊÇ·ñ£¨¸Ã/ÄÜ£©ÖÃ¶¥
+//åˆ¤æ–­æ˜¯å¦ï¼ˆè¯¥/èƒ½ï¼‰ç½®é¡¶
 bool is_enable_hid(HWND hwnd)
 {
-	// »ù±¾¼ì²é£º´°¿Ú±ØĞë´æÔÚÇÒ¿É¼û
+	// åŸºæœ¬æ£€æŸ¥ï¼šçª—å£å¿…é¡»å­˜åœ¨ä¸”å¯è§
 	if (!IsWindowVisible(hwnd))
 	{
-		cout << "´°¿Ú²»¿É¼û" << endl;
+		cout << "çª—å£ä¸å¯è§" << endl;
 		return false;
 	}
 
-	// »ñÈ¡´°¿ÚÑùÊ½
+	// è·å–çª—å£æ ·å¼
 	LONG style = GetWindowLongW(hwnd, GWL_STYLE);
 	LONG exStyle = GetWindowLongW(hwnd, GWL_EXSTYLE);
 
-	// ÅÅ³ı×Ó´°¿Ú
+	// æ’é™¤å­çª—å£
 	if (style & WS_CHILD)
 	{
-		cout << "ÊÇÎª×Ó´°¿Ú" << endl;
+		cout << "æ˜¯ä¸ºå­çª—å£" << endl;
 		return false;
 	}
 
-	// ÅÅ³ı¹¤¾ß´°¿Ú£¨³ı·ÇÃ÷È·ĞèÒª£©
+	// æ’é™¤å·¥å…·çª—å£ï¼ˆé™¤éæ˜ç¡®éœ€è¦ï¼‰
 	if (exStyle & WS_EX_TOOLWINDOW)
 	{
-		cout << "ÊÇ¹¤¾ß´°¿Ú" << endl;
+		cout << "æ˜¯å·¥å…·çª—å£" << endl;
 		return false;
 	}
 	return true;
 }
 
-//ÀàÊµÏÖ*****************************************
+//ç±»å®ç°*****************************************
 void hide_win::hide()
 {
 	HWND current_win = GetForegroundWindow();
@@ -42,16 +42,16 @@ void hide_win::hide()
 	{
 		return;
 	}
-	//Òş²Ø
+	//éšè—
 	bool is_success = ShowWindow(current_win, SW_HIDE);
 	if (!is_success)
 	{
-		cout << "Òş²ØÊ§°Ü" << endl;
+		cout << "éšè—å¤±è´¥" << endl;
 		return;
 	}
-	//³É¹¦ºó¼ÓÈëÈİÆ÷
+	//æˆåŠŸååŠ å…¥å®¹å™¨
 	hide_list[current_win] = true;
-	cout << "Òş²Ø³É¹¦" << endl;
+	cout << "éšè—æˆåŠŸ" << endl;
 }
 
 void hide_win::restore()
@@ -62,7 +62,7 @@ void hide_win::restore()
 		ShowWindow(hwnd, SW_SHOW);
 	}
 	h.hide_list.clear();
-	cout << "È¡ÏûËùÓĞÒş²Ø³É¹¦" << endl;
+	cout << "å–æ¶ˆæ‰€æœ‰éšè—æˆåŠŸ" << endl;
 }
 
 

@@ -1,39 +1,39 @@
-#pragma once
+ï»¿#pragma once
 #include<Windows.h>
 #include<iostream>
 #include<unordered_map>
 #include"top.h"
 
-//Àà
+//ç±»
 class lable
 {
 public:
-    std::unordered_map<HWND, HWND> lable_list;//Ç°ÕßÎª¸¸´°¿Ú£¬ºóÕßÎª±êÇ©×Ó´°¿Ú
+    std::unordered_map<HWND, HWND> lable_list;//å‰è€…ä¸ºçˆ¶çª—å£ï¼Œåè€…ä¸ºæ ‡ç­¾å­çª—å£
 
-    //×¢²á´°¿Ú
+    //æ³¨å†Œçª—å£
     bool register_win_class();
-    //´´½¨´°¿Ú
+    //åˆ›å»ºçª—å£
     HWND creat_lable(HWND parent);
-    //Òş²ØËùÓĞ±êÇ©
+    //éšè—æ‰€æœ‰æ ‡ç­¾
     void hide_all();
-    //É¾³ı±êÇ©
+    //åˆ é™¤æ ‡ç­¾
     void delete_lable(HWND parent);
-    //¸üĞÂ±êÇ©ÈİÆ÷
+    //æ›´æ–°æ ‡ç­¾å®¹å™¨
     void update();
 };
 
 
-// ´°¿ÚÏûÏ¢´¦Àíº¯Êı
+// çª—å£æ¶ˆæ¯å¤„ç†å‡½æ•°
 LRESULT CALLBACK LabelWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 void CALLBACK HandleFocusEvent(
-    HWINEVENTHOOK hWinEventHook,  // ÊÂ¼ş¹³×Ó¾ä±ú
-    DWORD event,                  // ÊÂ¼şÀàĞÍ
-    HWND hwnd,                    // ·¢ÉúÊÂ¼şµÄ´°¿Ú¾ä±ú
-    LONG idObject,                // ¶ÔÏóID
-    LONG idChild,                 // ×ÓID
-    DWORD dwEventThread,          // ÊÂ¼şÏß³ÌID
+    HWINEVENTHOOK hWinEventHook,  // äº‹ä»¶é’©å­å¥æŸ„
+    DWORD event,                  // äº‹ä»¶ç±»å‹
+    HWND hwnd,                    // å‘ç”Ÿäº‹ä»¶çš„çª—å£å¥æŸ„
+    LONG idObject,                // å¯¹è±¡ID
+    LONG idChild,                 // å­ID
+    DWORD dwEventThread,          // äº‹ä»¶çº¿ç¨‹ID
     DWORD dwmsEventTime);
 
-//ÔËĞĞº¯Êı
+//è¿è¡Œå‡½æ•°
 int run_lable();

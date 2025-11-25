@@ -1,11 +1,11 @@
-#include"top.h"
+ï»¿#include"top.h"
 #include"hide.h"
 #include"tray_set.h"
 #include"lable_hook.h"
 #include<thread>
 using namespace std;
 
-//È«¾Ö±äÁ¿****************************
+//å…¨å±€å˜é‡****************************
 #define DELAY 2000
 extern top_list t;
 extern lable lp;
@@ -13,55 +13,55 @@ extern hide_win h;
 HHOOK keyboardHook;
 //************************************
 
-// ¼üÅÌ¹³×Ó´¦Àíº¯Êý
+// é”®ç›˜é’©å­å¤„ç†å‡½æ•°
 LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
 {
     if (nCode == HC_ACTION)
     {
         KBDLLHOOKSTRUCT* kbdStruct = (KBDLLHOOKSTRUCT*)lParam;
 
-        // ¼ì²éÊÇ·ñ°´ÏÂAlt+T
+        // æ£€æŸ¥æ˜¯å¦æŒ‰ä¸‹Alt+T
         if (wParam == WM_KEYDOWN || wParam == WM_SYSKEYDOWN)
         {
-            bool altPressed = (GetAsyncKeyState(VK_MENU) & 0x8000); // ¼ì²éAlt¼ü
+            bool altPressed = (GetAsyncKeyState(VK_MENU) & 0x8000); // æ£€æŸ¥Alté”®
             bool tPressed = (kbdStruct->vkCode == 'T');
             bool yPressed = (kbdStruct->vkCode == 'Y');
             bool hPressed = (kbdStruct->vkCode == 'H');
             bool gPressed = (kbdStruct->vkCode == 'G');
-            //ÖÃ¶¥
+            //ç½®é¡¶
             if (altPressed && tPressed)
             {
-                cout << "¼ì²âµ½¿ì½Ý¼ü" << std::endl;
-                // ÔÚÕâÀïÖ´ÐÐÄãµÄ¹¦ÄÜ
+                cout << "æ£€æµ‹åˆ°å¿«æ·é”®" << std::endl;
+                // åœ¨è¿™é‡Œæ‰§è¡Œä½ çš„åŠŸèƒ½
                 wintop();
-                // ·µ»Ø1¿ÉÒÔ×èÖ¹¸Ã°´¼ü´«µÝ¸øÆäËûÓ¦ÓÃ³ÌÐò
+                // è¿”å›ž1å¯ä»¥é˜»æ­¢è¯¥æŒ‰é”®ä¼ é€’ç»™å…¶ä»–åº”ç”¨ç¨‹åº
                 // return 1;
             }
-            //È¡ÏûËùÓÐÖÃ¶¥
+            //å–æ¶ˆæ‰€æœ‰ç½®é¡¶
             if (altPressed && yPressed)
             {
-                cout << "¼ì²âµ½¿ì½Ý¼ü" << std::endl;
-                // ÔÚÕâÀïÖ´ÐÐÄãµÄ¹¦ÄÜ
+                cout << "æ£€æµ‹åˆ°å¿«æ·é”®" << std::endl;
+                // åœ¨è¿™é‡Œæ‰§è¡Œä½ çš„åŠŸèƒ½
                 clean_all_top();
-                // ·µ»Ø1¿ÉÒÔ×èÖ¹¸Ã°´¼ü´«µÝ¸øÆäËûÓ¦ÓÃ³ÌÐò
+                // è¿”å›ž1å¯ä»¥é˜»æ­¢è¯¥æŒ‰é”®ä¼ é€’ç»™å…¶ä»–åº”ç”¨ç¨‹åº
                 // return 1;
             }
-            //Òþ²Ø
+            //éšè—
             if (altPressed && hPressed)
             {
-                cout << "¼ì²âµ½¿ì½Ý¼ü" << std::endl;
-                // ÔÚÕâÀïÖ´ÐÐÄãµÄ¹¦ÄÜ
+                cout << "æ£€æµ‹åˆ°å¿«æ·é”®" << std::endl;
+                // åœ¨è¿™é‡Œæ‰§è¡Œä½ çš„åŠŸèƒ½
                 h.hide();
-                // ·µ»Ø1¿ÉÒÔ×èÖ¹¸Ã°´¼ü´«µÝ¸øÆäËûÓ¦ÓÃ³ÌÐò
+                // è¿”å›ž1å¯ä»¥é˜»æ­¢è¯¥æŒ‰é”®ä¼ é€’ç»™å…¶ä»–åº”ç”¨ç¨‹åº
                 // return 1;
             }
-            //È¡ÏûËùÓÐÒþ²Ø
+            //å–æ¶ˆæ‰€æœ‰éšè—
             if (altPressed && gPressed)
             {
-                cout << "¼ì²âµ½¿ì½Ý¼ü" << std::endl;
-                // ÔÚÕâÀïÖ´ÐÐÄãµÄ¹¦ÄÜ
+                cout << "æ£€æµ‹åˆ°å¿«æ·é”®" << std::endl;
+                // åœ¨è¿™é‡Œæ‰§è¡Œä½ çš„åŠŸèƒ½
                 h.restore();
-                // ·µ»Ø1¿ÉÒÔ×èÖ¹¸Ã°´¼ü´«µÝ¸øÆäËûÓ¦ÓÃ³ÌÐò
+                // è¿”å›ž1å¯ä»¥é˜»æ­¢è¯¥æŒ‰é”®ä¼ é€’ç»™å…¶ä»–åº”ç”¨ç¨‹åº
                 // return 1;
             }
             
@@ -73,19 +73,19 @@ LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-    //×¢²á´°¿ÚÀà
+    //æ³¨å†Œçª—å£ç±»
     lp.register_win_class();
     thread(run_lable).detach();
     keyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, KeyboardProc, GetModuleHandle(NULL), 0);
-    cout << "´´½¨´°¿Ú" << endl;
-    //ÍÐÅÌ´¦Àí
+    cout << "åˆ›å»ºçª—å£" << endl;
+    //æ‰˜ç›˜å¤„ç†
     creat_tray();
 
 
 
 
 
-    // ÏûÏ¢Ñ­»· - ±ØÐëÒªÓÐ£¬·ñÔò³ÌÐò»áÁ¢¼´ÍË³ö
+    // æ¶ˆæ¯å¾ªçŽ¯ - å¿…é¡»è¦æœ‰ï¼Œå¦åˆ™ç¨‹åºä¼šç«‹å³é€€å‡º
     MSG msg;
     while (GetMessage(&msg, NULL, 0, 0))
     {

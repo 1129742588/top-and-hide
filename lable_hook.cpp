@@ -1,4 +1,4 @@
-#include"lable_hook.h"
+ï»¿#include"lable_hook.h"
 
 using namespace std;
 
@@ -12,10 +12,10 @@ extern top_list t;
 
 
 //************************************************
-//×¢²á´°¿Ú
+//æ³¨å†Œçª—å£
 bool lable::register_win_class()
     {
-        // ×¢²á´°¿ÚÀà
+        // æ³¨å†Œçª—å£ç±»
         WNDCLASSEX wc = {};
         wc.cbSize = sizeof(WNDCLASSEX);
         wc.lpfnWndProc = LabelWindowProc;
@@ -24,39 +24,39 @@ bool lable::register_win_class()
         return RegisterClassEx(&wc) != 0;
     }
 
-//´´½¨´°¿Ú
+//åˆ›å»ºçª—å£
 HWND lable::creat_lable(HWND parent)
 {
-        //ÅĞ¶ÏÊÇ·ñÒÑ¾­´´½¨ÁËÖÃ¶¥±êÇ©
+        //åˆ¤æ–­æ˜¯å¦å·²ç»åˆ›å»ºäº†ç½®é¡¶æ ‡ç­¾
         if (lp.lable_list.count(parent) != 0)
         {
             return lp.lable_list[parent];
         }
         HWND lable_win=NULL;
         lable_win = CreateWindowEx(
-            WS_EX_LAYERED | WS_EX_TOOLWINDOW | WS_EX_TOPMOST | WS_EX_TRANSPARENT,  // ¶à¸öÀ©Õ¹ÑùÊ½
-            L"TopLable",  // ²»Í¬µÄÀàÃû
-            L"",  // ¿Õ±êÌâ
-            WS_POPUP | WS_VISIBLE,  // µ¯³ö´°¿ÚÑùÊ½
+            WS_EX_LAYERED | WS_EX_TOOLWINDOW | WS_EX_TOPMOST | WS_EX_TRANSPARENT,  // å¤šä¸ªæ‰©å±•æ ·å¼
+            L"TopLable",  // ä¸åŒçš„ç±»å
+            L"",  // ç©ºæ ‡é¢˜
+            WS_POPUP | WS_VISIBLE,  // å¼¹å‡ºçª—å£æ ·å¼
             -10, 0,
-            80, 30,  // ¸üĞ¡µÄ³ß´ç
+            80, 30,  // æ›´å°çš„å°ºå¯¸
             NULL, NULL, GetModuleHandle(NULL), NULL
         );
-        //ÕâÀïµÄ°ó¶¨±ØĞëÔÚÑÕÉ«Í¸Ã÷Ö®Ç°£¬²»È»ÏÔÊ¾²»³ö´°¿Ú
-        SetParent(lable_win, parent);// ½¨Á¢¸¸×Ó¹ØÏµ
-        SetLayeredWindowAttributes(lable_win, RGB(0, 0, 0), 0, LWA_COLORKEY);//ÉèÖÃÖ¸¶¨ÑÕÉ«Í¸Ã÷
+        //è¿™é‡Œçš„ç»‘å®šå¿…é¡»åœ¨é¢œè‰²é€æ˜ä¹‹å‰ï¼Œä¸ç„¶æ˜¾ç¤ºä¸å‡ºçª—å£
+        SetParent(lable_win, parent);// å»ºç«‹çˆ¶å­å…³ç³»
+        SetLayeredWindowAttributes(lable_win, RGB(0, 0, 0), 0, LWA_COLORKEY);//è®¾ç½®æŒ‡å®šé¢œè‰²é€æ˜
         
 
         if (!lable_win)
         {
-            cout << "´´½¨´°¿ÚÊ§°Ü£¡" << std::endl;
+            cout << "åˆ›å»ºçª—å£å¤±è´¥ï¼" << std::endl;
             return 0;
         }
         lable_list[parent] = lable_win;
         return lable_win;
 }
 
-//Òş²ØËùÓĞ±êÇ©
+//éšè—æ‰€æœ‰æ ‡ç­¾
 void lable::hide_all()
 {
     for (const auto& p : lable_list)
@@ -66,18 +66,18 @@ void lable::hide_all()
     }
 };
 
-//É¾³ı±êÇ©
+//åˆ é™¤æ ‡ç­¾
 void  lable::delete_lable(HWND parent)
 {
     DestroyWindow(lable_list[parent]);
     if (lable_list.erase(parent) > 0)
     {
-        cout << "É¾³ı±êÇ©ÈİÆ÷" << endl;
+        cout << "åˆ é™¤æ ‡ç­¾å®¹å™¨" << endl;
         return;
     }
 }
 
-//¸üĞÂ±êÇ©ÈİÆ÷
+//æ›´æ–°æ ‡ç­¾å®¹å™¨
 void lable::update()
 {
     
@@ -88,7 +88,7 @@ void lable::update()
 
 
 
-// ´°¿ÚÏûÏ¢´¦Àíº¯Êı
+// çª—å£æ¶ˆæ¯å¤„ç†å‡½æ•°
 LRESULT CALLBACK LabelWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     switch (uMsg)
@@ -101,50 +101,50 @@ LRESULT CALLBACK LabelWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPa
         RECT rect;
         GetClientRect(hwnd, &rect);
 
-        // Ê¹ÓÃÄÚ´æDC±ÜÃâÉÁË¸
+        // ä½¿ç”¨å†…å­˜DCé¿å…é—ªçƒ
         HDC hdcMem = CreateCompatibleDC(hdc);
         HBITMAP hBitmap = CreateCompatibleBitmap(hdc, rect.right, rect.bottom);
         SelectObject(hdcMem, hBitmap);
 
-        // »æÖÆ±³¾°
+        // ç»˜åˆ¶èƒŒæ™¯
         HBRUSH hBrush = CreateSolidBrush(RGB(0, 0, 0));
         FillRect(hdcMem, &rect, hBrush);
         DeleteObject(hBrush);
         
-        //// ÉèÖÃ×ÖÌå
+        //// è®¾ç½®å­—ä½“
         //HFONT hFont = CreateFont(
-        //    35,                       // ×ÖÌå¸ß¶È
-        //    0,                        // ¿í¶È£¨0±íÊ¾¸ù¾İ¸ß¶È×Ô¶¯µ÷Õû£©
-        //    0,                        // ÎÄ±¾ÇãĞ±¶È
-        //    0,                        // ·½Ïò
-        //    FW_NORMAL,                // ×ÖÌå´ÖÏ¸
-        //    FALSE,                    // ÊÇ·ñĞ±Ìå
-        //    FALSE,                    // ÊÇ·ñÏÂ»®Ïß
-        //    FALSE,                    // ÊÇ·ñÉ¾³ıÏß
-        //    DEFAULT_CHARSET,          // ×Ö·û¼¯
-        //    OUT_DEFAULT_PRECIS,       // Êä³ö¾«¶È
-        //    CLIP_DEFAULT_PRECIS,      // ²Ã¼ô¾«¶È
-        //    DEFAULT_QUALITY,          // Êä³öÖÊÁ¿
-        //    DEFAULT_PITCH | FF_SWISS, // ×ÖÌåÏµÁĞºÍ¼ä¾à
-        //    L"Î¢ÈíÑÅºÚ"               // ×ÖÌåÃû³Æ
+        //    35,                       // å­—ä½“é«˜åº¦
+        //    0,                        // å®½åº¦ï¼ˆ0è¡¨ç¤ºæ ¹æ®é«˜åº¦è‡ªåŠ¨è°ƒæ•´ï¼‰
+        //    0,                        // æ–‡æœ¬å€¾æ–œåº¦
+        //    0,                        // æ–¹å‘
+        //    FW_NORMAL,                // å­—ä½“ç²—ç»†
+        //    FALSE,                    // æ˜¯å¦æ–œä½“
+        //    FALSE,                    // æ˜¯å¦ä¸‹åˆ’çº¿
+        //    FALSE,                    // æ˜¯å¦åˆ é™¤çº¿
+        //    DEFAULT_CHARSET,          // å­—ç¬¦é›†
+        //    OUT_DEFAULT_PRECIS,       // è¾“å‡ºç²¾åº¦
+        //    CLIP_DEFAULT_PRECIS,      // è£å‰ªç²¾åº¦
+        //    DEFAULT_QUALITY,          // è¾“å‡ºè´¨é‡
+        //    DEFAULT_PITCH | FF_SWISS, // å­—ä½“ç³»åˆ—å’Œé—´è·
+        //    L"å¾®è½¯é›…é»‘"               // å­—ä½“åç§°
         //);
 
-        //// Ñ¡ÔñĞÂ×ÖÌåµ½DC£¬±£´æ¾É×ÖÌå
+        //// é€‰æ‹©æ–°å­—ä½“åˆ°DCï¼Œä¿å­˜æ—§å­—ä½“
         //HFONT hOldFont = (HFONT)SelectObject(hdcMem, hFont);
 
-        // ÉèÖÃÎÄ±¾ÊôĞÔ
+        // è®¾ç½®æ–‡æœ¬å±æ€§
         SetBkMode(hdcMem, TRANSPARENT);
         SetTextColor(hdcMem, RGB(255, 0, 0));
-        DrawText(hdcMem, L"ÖÃ¶¥", -1, &rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+        DrawText(hdcMem, L"ç½®é¡¶", -1, &rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
 
-        // ¸´ÖÆµ½ÆÁÄ»
+        // å¤åˆ¶åˆ°å±å¹•
         BitBlt(hdc, 0, 0, rect.right, rect.bottom, hdcMem, 0, 0, SRCCOPY);
 
 
-        //// »Ö¸´¾É×ÖÌå²¢É¾³ıĞÂ×ÖÌå
+        //// æ¢å¤æ—§å­—ä½“å¹¶åˆ é™¤æ–°å­—ä½“
         //SelectObject(hdcMem, hOldFont);
         //DeleteObject(hFont);
-        // ÇåÀí
+        // æ¸…ç†
         DeleteObject(hBitmap);
         DeleteDC(hdcMem);
 
@@ -153,12 +153,12 @@ LRESULT CALLBACK LabelWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPa
     }
 
     case WM_SETCURSOR:
-        // ¹Ø¼ü£ºÈ·±£ÏÔÊ¾¼ıÍ·¹â±ê
+        // å…³é”®ï¼šç¡®ä¿æ˜¾ç¤ºç®­å¤´å…‰æ ‡
         SetCursor(LoadCursor(NULL, IDC_ARROW));
         return TRUE;
 
     case WM_MOUSEACTIVATE:
-        // ·ÀÖ¹´°¿Ú±»¼¤»î
+        // é˜²æ­¢çª—å£è¢«æ¿€æ´»
         return MA_NOACTIVATE;
 
     case WM_DESTROY:
@@ -171,34 +171,34 @@ LRESULT CALLBACK LabelWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 }
 
 
-//¾Û½¹´°¿Ú±ä»¯¼à²â»Øµ÷º¯Êı
+//èšç„¦çª—å£å˜åŒ–ç›‘æµ‹å›è°ƒå‡½æ•°
 void CALLBACK HandleFocusEvent(
-        HWINEVENTHOOK hWinEventHook,  // ÊÂ¼ş¹³×Ó¾ä±ú
-        DWORD event,                  // ÊÂ¼şÀàĞÍ
-        HWND hwnd,                    // ·¢ÉúÊÂ¼şµÄ´°¿Ú¾ä±ú
-        LONG idObject,                // ¶ÔÏóID
-        LONG idChild,                 // ×ÓID
-        DWORD dwEventThread,          // ÊÂ¼şÏß³ÌID
-        DWORD dwmsEventTime           )// ÊÂ¼şÊ±¼ä
+        HWINEVENTHOOK hWinEventHook,  // äº‹ä»¶é’©å­å¥æŸ„
+        DWORD event,                  // äº‹ä»¶ç±»å‹
+        HWND hwnd,                    // å‘ç”Ÿäº‹ä»¶çš„çª—å£å¥æŸ„
+        LONG idObject,                // å¯¹è±¡ID
+        LONG idChild,                 // å­ID
+        DWORD dwEventThread,          // äº‹ä»¶çº¿ç¨‹ID
+        DWORD dwmsEventTime           )// äº‹ä»¶æ—¶é—´
 {
-    // Ö»´¦Àí´°¿Ú¶ÔÏóµÄÊÂ¼ş
+    // åªå¤„ç†çª—å£å¯¹è±¡çš„äº‹ä»¶
     if (idObject != OBJID_WINDOW || idChild != CHILDID_SELF) {
         return;
     }
 
-    // ¹Ø¼ü£º¹ıÂËµô±êÇ©´°¿Ú×ÔÉíµÄÊÂ¼ş
+    // å…³é”®ï¼šè¿‡æ»¤æ‰æ ‡ç­¾çª—å£è‡ªèº«çš„äº‹ä»¶
     wchar_t className[256];
     GetClassNameW(hwnd, className, 256);
     if (wcscmp(className, LABEL_CLASS_NAME) == 0) {
-        return; // ºöÂÔ±êÇ©´°¿Ú×ÔÉíµÄÊÂ¼ş
+        return; // å¿½ç•¥æ ‡ç­¾çª—å£è‡ªèº«çš„äº‹ä»¶
     }
     
-    // ¹ıÂËµôÎŞĞ§´°¿Ú
+    // è¿‡æ»¤æ‰æ— æ•ˆçª—å£
     if (!IsWindowVisible(hwnd) || IsIconic(hwnd)) {
         return;
     }
 
-    // ¹ıÂËµôÌ«Ğ¡»ò²»ÖØÒªµÄ´°¿Ú
+    // è¿‡æ»¤æ‰å¤ªå°æˆ–ä¸é‡è¦çš„çª—å£
     RECT rect;
     if (GetWindowRect(hwnd, &rect)) {
         int width = rect.right - rect.left;
@@ -211,17 +211,17 @@ void CALLBACK HandleFocusEvent(
     switch(event)
     {
         case EVENT_SYSTEM_FOREGROUND:
-            //¸üĞÂÖÃ¶¥ÈİÆ÷ºÍ±êÇ©ÈİÆ÷£¬ÅÅ³ıÎŞĞ§´°¿Ú
+            //æ›´æ–°ç½®é¡¶å®¹å™¨å’Œæ ‡ç­¾å®¹å™¨ï¼Œæ’é™¤æ— æ•ˆçª—å£
             
-            //ÅĞ¶Ïµ±Ç°´°¿ÚÊÇ·ñÓĞ°ó¶¨µÄ±êÇ©
+            //åˆ¤æ–­å½“å‰çª—å£æ˜¯å¦æœ‰ç»‘å®šçš„æ ‡ç­¾
             HWND current_win = GetForegroundWindow();
             if(lp.lable_list.count(current_win)>0)
             {
                 lp.hide_all();
                 ShowWindow(lp.lable_list[current_win], SW_SHOW);
-                cout << "´°¿Ú½¹µã±ä»¯" << endl;
-                cout << "µ±Ç°ÖÃ¶¥ÈİÆ÷ÊıÁ¿£º" << t.status.size() << endl;
-                cout << "µ±Ç°±êÇ©ÈİÆ÷ÊıÁ¿£º" << lp.lable_list.size() << endl;
+                cout << "çª—å£ç„¦ç‚¹å˜åŒ–" << endl;
+                cout << "å½“å‰ç½®é¡¶å®¹å™¨æ•°é‡ï¼š" << t.status.size() << endl;
+                cout << "å½“å‰æ ‡ç­¾å®¹å™¨æ•°é‡ï¼š" << lp.lable_list.size() << endl;
 
                 return;
             }
@@ -234,24 +234,24 @@ void CALLBACK HandleFocusEvent(
 int run_lable()
 {
     lp.register_win_class();
-    // ÉèÖÃWindowsÊÂ¼ş¹³×Ó
+    // è®¾ç½®Windowsäº‹ä»¶é’©å­
     HWINEVENTHOOK hook = SetWinEventHook(
-        EVENT_SYSTEM_FOREGROUND,  // ¼àÌıµÄÊÂ¼şÀàĞÍ£ºÇ°¾°´°¿Ú±ä»¯
-        EVENT_OBJECT_LOCATIONCHANGE,  // ¼àÌıµÄÊÂ¼ş·¶Î§½áÊø£¨Í¬¿ªÊ¼£¬±íÊ¾Ö»¼àÌıÕâÒ»ÖÖÊÂ¼ş£©
-        NULL,                     // ¼àÌıËùÓĞ½ø³Ì
-        HandleFocusEvent,         // ÊÂ¼ş·¢ÉúÊ±µÄ»Øµ÷º¯Êı
-        0, 0,                     // ¼àÌıËùÓĞ½ø³ÌºÍÏß³Ì
-        WINEVENT_OUTOFCONTEXT     // ÔÚ·¢³öÊÂ¼şµÄ½ø³ÌÉÏÏÂÎÄÖ®Íâµ÷ÓÃ
+        EVENT_SYSTEM_FOREGROUND,  // ç›‘å¬çš„äº‹ä»¶ç±»å‹ï¼šå‰æ™¯çª—å£å˜åŒ–
+        EVENT_OBJECT_LOCATIONCHANGE,  // ç›‘å¬çš„äº‹ä»¶èŒƒå›´ç»“æŸï¼ˆåŒå¼€å§‹ï¼Œè¡¨ç¤ºåªç›‘å¬è¿™ä¸€ç§äº‹ä»¶ï¼‰
+        NULL,                     // ç›‘å¬æ‰€æœ‰è¿›ç¨‹
+        HandleFocusEvent,         // äº‹ä»¶å‘ç”Ÿæ—¶çš„å›è°ƒå‡½æ•°
+        0, 0,                     // ç›‘å¬æ‰€æœ‰è¿›ç¨‹å’Œçº¿ç¨‹
+        WINEVENT_OUTOFCONTEXT     // åœ¨å‘å‡ºäº‹ä»¶çš„è¿›ç¨‹ä¸Šä¸‹æ–‡ä¹‹å¤–è°ƒç”¨
     );
-    // ¼ì²é¹³×ÓÊÇ·ñÉèÖÃ³É¹¦
+    // æ£€æŸ¥é’©å­æ˜¯å¦è®¾ç½®æˆåŠŸ
     if (!hook) {
-        std::cout << "´íÎó£ºÎŞ·¨ÉèÖÃÊÂ¼ş¹³×Ó" << std::endl;
+        std::cout << "é”™è¯¯ï¼šæ— æ³•è®¾ç½®äº‹ä»¶é’©å­" << std::endl;
         return 1;
     }
-    std::cout << "¹³×ÓÉèÖÃ³É¹¦£¬¿ªÊ¼¼àÌı½¹µã±ä»¯..." << std::endl;
-    std::cout << "°´ÈÎÒâ¼üÍË³ö³ÌĞò" << std::endl;
+    std::cout << "é’©å­è®¾ç½®æˆåŠŸï¼Œå¼€å§‹ç›‘å¬ç„¦ç‚¹å˜åŒ–..." << std::endl;
+    std::cout << "æŒ‰ä»»æ„é”®é€€å‡ºç¨‹åº" << std::endl;
 
-    // ÏûÏ¢Ñ­»· - ±ØĞëÒªÓĞ£¬·ñÔò³ÌĞò»áÁ¢¼´ÍË³ö
+    // æ¶ˆæ¯å¾ªç¯ - å¿…é¡»è¦æœ‰ï¼Œå¦åˆ™ç¨‹åºä¼šç«‹å³é€€å‡º
     MSG msg;
     while (GetMessage(&msg, NULL, 0, 0)) 
     {
@@ -259,9 +259,9 @@ int run_lable()
         DispatchMessage(&msg);
     }
 
-    // ³ÌĞòÍË³öÇ°Ğ¶ÔØ¹³×Ó
+    // ç¨‹åºé€€å‡ºå‰å¸è½½é’©å­
     UnhookWinEvent(hook);
-    std::cout << "³ÌĞòÒÑÍË³ö" << std::endl;
+    std::cout << "ç¨‹åºå·²é€€å‡º" << std::endl;
 
     return 0;
 }
